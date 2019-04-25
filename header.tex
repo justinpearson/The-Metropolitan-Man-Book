@@ -1,0 +1,199 @@
+\documentclass[ebook,12pt]{memoir}
+\usepackage[
+    bookmarks=true,
+    unicode=true,
+    pdfborder={0 0 0},
+    pdftitle={The Metropolitan Man},
+    pdfauthor={Alexander Wales}, 
+    breaklinks={true},
+    pdfkeywords={superman, rationality},
+    pdfencoding=auto
+]{hyperref}                            % for \url
+
+\usepackage[utf8]{inputenc}            % Use unicode or pdflatex deletes non-ascii chars like é
+
+\linespread{1.1}                       % space between lines
+\setlrmarginsandblock{1.5cm}{1.5cm}{*}     % left-right margins
+\setulmarginsandblock{2.5cm}{*}{1}     % top-bottom margins
+\checkandfixthelayout                  % weird-ass memoir hack
+\usepackage{charter}                   % change font
+\usepackage{verbatim}                  % for \verbatiminput
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%% Page 1 & 2: blank %%%%%%%%%%%%%%%%%
+\thispagestyle{empty}  % no page number on this page
+\phantom{lol}
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%% Page 3: Title %%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\thispagestyle{empty}
+\vspace*{0.2in}  % vspace* : * means "do not discard this whitespace, 
+                 %  despite it being at the top or bottom of the page"
+\Huge\MakeUppercase{The Metropolitan Man}       \\
+\vspace{0.5in}                                  
+\large BY                                       \\
+\vspace{0.1in}                                  
+\LARGE \MakeUppercase{Alexander Wales}          \\
+\normalsize                                     
+\vspace{4in}
+Find the original text at:                      \\
+\url{http://fanfiction.net/s/10360716/1/The-Metropolitan-Man}
+\end{center}
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%% Page 4: Copyright %%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}
+\footnotesize
+
+\noindent The Metropolitan Man \copyright\ 2014 Alexander Wales.
+
+\vspace{.2in}
+
+\noindent Alexander Wales website:
+
+\url{https://alexanderwales.com/}
+
+\vspace{.2in}
+
+\noindent Text downloaded from fanfiction.net:
+
+\url{https://www.fanfiction.net/s/10360716/1/The-Metropolitan-Man}
+
+\vspace{.2in}
+
+\noindent Other fanfics from Alexander Wales:
+
+\url{https://www.fanfiction.net/u/4976703/alexanderwales}
+
+\vspace{.2in}
+
+\noindent Support Alexander Wales on Patreon:
+
+\url{https://www.patreon.com/alexanderwales}
+
+\vspace{.2in}
+
+\noindent Cover illustrations \copyright\ Justin Maller:
+
+\url{http://justinmaller.com/wallpaper/356/}
+
+\vspace{.2in}
+
+\noindent Cover art downloaded from Mike Schw\"orer's GitHub repo:
+
+\url{https://github.com/Mikescher/Metropolitan-Man-Lyx}
+
+\vspace{.2in}
+
+\noindent Typeset by Justin P. Pearson:
+
+\url{http://justinppearson.com}
+
+
+\vfill
+
+\begin{description}
+    \item[Category] Superman
+    \item[Genre] Adventure, Mystery 
+    \item[Language] English 
+    \item[Published] May 18, 2014
+    \item[Updated] July 25, 2014
+    \item[Status] Complete
+    \item[Rating] M 
+    \item[Chapters] 13 
+    \item[Words] 80,698
+    \item[Publisher] www.fanfiction.net 
+\end{description}
+
+\normalsize
+\cleartorecto
+
+%%%%%%%%%%%%%%%%%%%%% Page 5: preamble %%%%%%%%%%%%%%%%%%%%%%%
+
+\thispagestyle{empty}
+
+\vspace*{2in}
+
+\textbf{How to generate and print this PDF yourself}
+
+\vspace*{.5cm}
+
+\footnotesize
+
+I can't resist showing you how to create the PDF for \emph{The Metropolitan Man} yourself. 
+The following two pages show the code that produced this PDF. By running it in your terminal, the code will
+download the \emph{The Metropolitan Man} from \url{fanfiction.net} 
+and typeset it into a PDF with LaTeX (a typesetting program common in academia). 
+I tried to use only common programs like \texttt{curl}, \texttt{sed}, and \texttt{python3},
+and if you're not familiar with \texttt{pandoc} (an excellent document conversion tool), 
+I hope this project will show you how easy and powerful it is.
+
+The code lives at this GitHub repository:
+
+\noindent \url{https://github.com/justinpearson/The-Metropolitan-Man-Book}
+
+Armed with the PDF and some cover art, you can then order a physical copy to be printed by 
+an online book-printer like \url{http://lulu.com}.
+
+I hope you can tweak this code and use it to download, typeset, 
+and print your own books!
+
+\ \ \ \ --- Justin Pearson, Apr 2019
+
+\normalsize
+\cleartoverso
+
+
+%%%%%%%%%%%%%%%%%%%% Page 6: bash script %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}
+
+% \footnotesize
+% \noindent The following shell script will download and typeset \emph{The Metropolitan Man} 
+%using curl, sed, Python, BeautifulSoup, pandoc, and pdflatex. 
+
+% \vspace{.2cm}
+% \vfill
+
+\tiny
+
+\verbatiminput{build.sh}
+
+\normalsize
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%% Page 7: python script %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}
+
+\footnotesize
+\noindent The shell script on the previous page uses the following Python script 
+to parse the HTML from fanfiction.net. This script uses the BeautifulSoup package to
+select both the chapter title and the HTML \texttt{<div>} tag containing
+the story. It prepends the chapter title to the story's \texttt{<div>}
+as an \texttt{<h1>} header tag, because pandoc --- used later in the pipeline --- 
+converts header tags to \LaTeX\ chapters. 
+The script reads from stdin and prints the pruned HTML to stdout, making this script suitable 
+for use in Unix pipelines. 
+
+\vspace{.5cm}
+
+\tiny
+
+\verbatiminput{prune_html.py}
+
+\normalsize
+\cleartorecto
+
+
+%%%%%%%%%%%%%%%%%%%%% Page 9: TOC %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \frontmatter        % Use lowercase Roman numerals as page numbers.
+\tableofcontents*  % * means "no self-reference to TOC in the TOC"
+\addtocontents{toc}{\protect\thispagestyle{empty}}   % no page numbers on the TOC pages (ch 1 should be page 1)
+\pagenumbering{gobble}
+
+\mainmatter         % Restart page number and use Arabic numbers.
+
+
