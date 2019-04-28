@@ -1,4 +1,6 @@
 #!/usr/bin/env python3 
+#
+# prune_html.py
 
 import sys, bs4, re
 

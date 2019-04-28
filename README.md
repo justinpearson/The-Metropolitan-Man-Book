@@ -1,19 +1,27 @@
 # Print "The Metropolitan Man" fanfic as a hard-copy book.
 
-This repo offers code to download and typeset _The Metropolitan Man_, the rationalist Superman fanfic by [Alexander Wales](https://alexanderwales.com/).
+This repo offers code to download and typeset _The Metropolitan Man_, 
+the rationalist Superman fanfic by [Alexander Wales](https://alexanderwales.com/).
 
-Armed with the PDF `mm.pdf` and the cover art in `cover-art/`, you can print your own hard-copy of _The Metropolitan Man_ at online book-printing sites like http://www.lulu.com. 
+Armed with the PDF `mm.pdf` and the cover art in `cover-art/`, 
+you can print your own hard-copy of _The Metropolitan Man_ 
+at online book-printing sites like http://www.lulu.com. 
 
 ![](/images/mm.jpg)
 
-_The Metropolitan Man_ was originally hosted [here](http://www.fanfiction.net/s/10360716/1/The-Metropolitan-Man) on fanfiction.net.
+_The Metropolitan Man_ was originally hosted 
+[here](http://www.fanfiction.net/s/10360716/1/The-Metropolitan-Man) on fanfiction.net.
 
-The cover art comes from Mike Schwörer's GitHub repo [Metropolitan-Man-Lyx](https://github.com/Mikescher/Metropolitan-Man-Lyx), and was originally created by [Justin Maller](http://justinmaller.com/wallpaper/356/).
+The cover art comes from Mike Schwörer's GitHub repo 
+[Metropolitan-Man-Lyx](https://github.com/Mikescher/Metropolitan-Man-Lyx), 
+and was originally created by [Justin Maller](http://justinmaller.com/wallpaper/356/).
 
 
 ## How to use
 
-1. **Build the PDF:** Run the shell script `build.sh` at the terminal to download _The Metropolitan Man_ from fanfiction.net and typeset it into a PDF named `mm.pdf`:
+1. **Build the PDF:** Run the shell script `build.sh` at the terminal 
+to download _The Metropolitan Man_ from fanfiction.net and 
+typeset it into a PDF named `mm.pdf`:
 
         $ ./build.sh
 
@@ -21,7 +29,10 @@ The cover art comes from Mike Schwörer's GitHub repo [Metropolitan-Man-Lyx](htt
 
     Intermediate files are stored in `files/`, and are useful for exploring and debugging.
 
-2. **Print the book at lulu.com:** At http://lulu.com, go through the flow for printing a 6"x9" paperback. Upload the story `mm.pdf` and use the cover-art designer to upload the front, back, and spine cover art provided in `cover-art/`. The book costs less than $10 to print!
+2. **Print the book at lulu.com:** At http://lulu.com, go through the 
+flow for printing a 6"x9" paperback. Upload the story `mm.pdf` and 
+use the cover-art designer to upload the front, back, and spine 
+cover art provided in `cover-art/`. The book costs less than $10 to print!
 
 ## How it works
 

@@ -13,12 +13,20 @@
 \usepackage[utf8]{inputenc}            % Use unicode or pdflatex deletes non-ascii chars like é
 
 \linespread{1.1}                       % space between lines
-\setlrmarginsandblock{1.5cm}{1.5cm}{*}     % left-right margins
+\setlrmarginsandblock{2cm}{1.5cm}{*}     % left-right margins
 \setulmarginsandblock{2.5cm}{*}{1}     % top-bottom margins
 \checkandfixthelayout                  % weird-ass memoir hack
 \usepackage{charter}                   % change font
 \usepackage{verbatim}                  % for \verbatiminput
 
+
+% Fixes the annoying linebreak at ---'' , for example,
+% “Ma’am, if you don’t want me bringing pistols into your home—
+% ” Floyd began.
+% Use \Emdash*, \Endash* (no need to use \Hyphdash) (* means non-breaking)
+% and shortcuts: \=== \==
+% https://tex.stackexchange.com/questions/103608/how-to-force-latex-not-to-break-the-line-after-a-hyphen
+\usepackage[shortcuts]{extdash}
 
 \begin{document}
 
@@ -40,7 +48,7 @@
 \normalsize                                     
 \vspace{4in}
 Find the original text at:                      \\
-\url{http://fanfiction.net/s/10360716/1/The-Metropolitan-Man}
+\footnotesize{\url{http://fanfiction.net/s/10360716/1/The-Metropolitan-Man}}
 \end{center}
 \clearpage
 
@@ -124,9 +132,12 @@ Find the original text at:                      \\
 \footnotesize
 
 I can't resist showing you how to create the PDF for \emph{The Metropolitan Man} yourself. 
-The following two pages show the code that produced this PDF. By running it in your terminal, the code will
+The following two pages show the code that produced this 
+PDF\footnote{ \tiny{Actually the code to produce this PDF is slightly more complicated 
+because it fixes some minor typesetting bugs in hyphenation and quotation marks.}}. 
+By running it in your terminal, the code will
 download the \emph{The Metropolitan Man} from \url{fanfiction.net} 
-and typeset it into a PDF with LaTeX (a typesetting program common in academia). 
+and typeset it into a PDF with LaTeX (a typesetting program common in academia).
 I tried to use only common programs like \texttt{curl}, \texttt{sed}, and \texttt{python3},
 and if you're not familiar with \texttt{pandoc} (an excellent document conversion tool), 
 I hope this project will show you how easy and powerful it is.
@@ -159,7 +170,7 @@ and print your own books!
 
 \tiny
 
-\verbatiminput{build.sh}
+\verbatiminput{build-simple.sh}
 
 \normalsize
 \clearpage
