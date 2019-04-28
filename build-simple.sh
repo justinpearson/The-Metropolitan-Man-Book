@@ -15,6 +15,11 @@
 #         Also, re-pandoc it to get smart-quotes everywhere,
 #         fixing a parsing bug where <em> tags in quotes cause 
 #         pandoc to not smart-quote the quotes.
+# pdflatex: convert the .tex file to a PDF using the TeX document-
+#           typesetting program created by Donald Knuth.
+#           You have to run it twice: once to gather page information
+#           for the table of contents, and again to build the final
+#           doc with a correct table of contents.
 
 function chapter() {
     local i=$1
