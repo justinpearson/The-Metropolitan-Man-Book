@@ -4,7 +4,7 @@
 
 import sys, bs4, re
 
-soup = bs4.BeautifulSoup(sys.stdin.read(),'html5lib')
+soup = bs4.BeautifulSoup(sys.stdin.read(), features='html.parser')
 story = soup.find(id='storytext')
 story.attrs = None
 chapter_name = re.search(
