@@ -42,7 +42,11 @@ cover art provided in `cover-art/`. The book costs less than $10 to print!
 
 2. The python script `prune_html.py` uses the excellent `BeautifulSoup` package to parse each chapter's HTML, selecting only the chapter name and the specific `<div>` that contains the actual story. It adds the chapter name as an `<h1>` tag inside the story's `<div>` because `h1` tags will be converted to Chapters in the HTML-to-Tex conversion. The resulting HTML is saved in `i_b_pruned.html`.
 
-    _Minor note:_ this file is a single long line. I would've preferred to use `BeautifulSoup`'s `prettify()` method to make it easier to read, but this has the unfortunate effect that `<em>` tags appear on their own line, which causes an extra space to be incorrectly inserted in certain cases. For example, `prettify()` converts the following HTML
+    _Minor note:_ this file is a single long line. I would've preferred to
+    use `BeautifulSoup`'s `prettify()` method to make it easier to read,
+    but this has the unfortunate effect that `<em>` tags appear on their own
+    line, which causes an extra space to be incorrectly inserted in certain
+    cases. For example, `prettify()` converts the following HTML
 
         <p>"I read <em>The Daily Planet</em>."</p>
 
@@ -60,7 +64,10 @@ cover art provided in `cover-art/`. The book costs less than $10 to print!
 
         ``I read \emph{The Daily Planet} .''   % incorrect space before period!
 
-3. A series of `sed` commands fix a couple typos and correct the hyphenation. Probably due to shortcomings in the text-editing environment at fanfiction.net, the author used only hyphens (dashes), rather than en-dashes and em-dashes (longer dashes). The hyphenation rules are as follows:
+3. A series of `sed` commands fix a couple typos and correct the hyphenation.
+Probably due to shortcomings in the text-editing environment at fanfiction.net,
+the author used only hyphens (dashes), rather than en-dashes and em-dashes
+(longer dashes). The hyphenation rules are as follows:
 
     - "pages 10-20" : en-dash (number range)
     - "his well-being" : hyphen (letters)
@@ -69,18 +76,36 @@ cover art provided in `cover-art/`. The book costs less than $10 to print!
 
     The resulting HTML is saved in `i_c_fix.html`.
 
-4. The excellent document-conversion tool `pandoc` converts the HTML to Tex. We use the option `--top-level-division=chapter` to convert `h1` tags to Tex chapters, and the option `--smart` to convert double quotes `"` to Tex's left- and right-sided double quotes \`\` and `''`. The resulting Tex code is written to `i_d_pandoc1.tex`. Note that this is not a "standalone" Tex file because it does not begin with `\documentclass{}` or have any other preamble that Tex requires. This is added next.
+4. The excellent document-conversion tool `pandoc` converts the HTML to Tex.
+We use the option `--top-level-division=chapter` to convert `h1` tags to Tex chapters,
+and the option `--smart` to convert double quotes `"` to Tex's left- and right-sided
+double quotes \`\` and `''`. The resulting Tex code is written
+to `i_d_pandoc1.tex`. Note that this is not a "standalone" Tex file
+because it does not begin with `\documentclass{}` or have any other
+preamble that Tex requires. This is added next.
 
-    _Minor note:_ We then run pandoc again, to fix an issue where it doesn't detect smart quotes when `<em>` tags appear inside the quoted string.
+    _Minor note:_ We then run pandoc again, to fix an issue where it doesn't
+    detect smart quotes when `<em>` tags appear inside the quoted string.
 
-5. The `cat` utility concatenates these chapters together, prepending a tex file `header.tex` at the beginning and appending `footer.tex` to the end. The file `header.tex` contains the Tex preamble that sets the font size, table of contents, copyright, image attributions, and other front-matter. This final tex file is written to `mm.tex`.
+5. The `cat` utility concatenates these chapters together, prepending a tex
+file `header.tex` at the beginning and appending `footer.tex` to the end.
+The file `header.tex` contains the Tex preamble that sets the font size,
+table of contents, copyright, image attributions, and other front-matter.
+This final tex file is written to `mm.tex`.
 
-6. The `pdflatex` utility converts the tex file `mm.tex` to the PDF `mm.pdf`. You need to run `pdflatex` twice: the first run generates the table of contents file `mm.toc`, which is used by `pdflatex` in the second run to generate the correct table of contents.
+6. The `pdflatex` utility converts the tex file `mm.tex` to the PDF `mm.pdf`.
+You need to run `pdflatex` twice: the first run generates the table of
+contents file `mm.toc`, which is used by `pdflatex` in the second run to
+generate the correct table of contents.
 
 
 ## Troubleshooting
 
-To see if you have all the correct programs installed to run `build.sh`, run this command. The resulting PDF `tmp.pdf` illustrates the various typesetting pitfalls with hyphenation and smart-quotes. (I.e., if you leave out the `sed` commands, the hyphenation won't look right, and if you leave out the second `pandoc` run, the quote marks won't look right.)
+To see if you have all the correct programs installed to run `build.sh`,
+run this command. The resulting PDF `tmp.pdf` illustrates the various
+typesetting pitfalls with hyphenation and smart-quotes. (I.e., if you
+leave out the `sed` commands, the hyphenation won't look right, and if
+you leave out the second `pandoc` run, the quote marks won't look right.)
 
     echo "
         <html>
@@ -110,4 +135,23 @@ To see if you have all the correct programs installed to run `build.sh`, run thi
 
 
 ![](/images/typesetting-pitfalls.png)
+
+In the final PDF, you should search for these troublesome spots and verify the line-breaks and dashes look ok:
+
+- bringing pistols into
+- to explain how I got
+- goodness of humanity
+- he could actually
+- --- that he
+
+If you run `./build.sh test`, it will search the final `mm.tex` tex file for you to examine
+what the tex looks like at these problematic parts:
+
+    $ ./build.sh test
+
+    ``Ma'am, if you don't want me bringing pistols into your \\ home\==='' Floyd
+    explain\ldots{} to explain how I got to where I am now.'' He took a
+    in the goodness of humanity~--- that was the story of Clark's time in
+    depths, but those depths weren't nearly so deep that he could actually
+    be~--- that he could have~---
 
