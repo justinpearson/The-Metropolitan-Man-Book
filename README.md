@@ -19,7 +19,9 @@ and was originally created by [Justin Maller](http://justinmaller.com/wallpaper/
 
 ## How to use
 
-1. **Build the PDF:** Run the shell script `build.sh` at the terminal 
+1. **Install dependencies:** `pip install -r requirements.txt`
+
+2. **Build the PDF:** Run the shell script `build.sh` at the terminal 
 to download _The Metropolitan Man_ from fanfiction.net and 
 typeset it into a PDF named `mm.pdf`:
 
@@ -29,9 +31,9 @@ typeset it into a PDF named `mm.pdf`:
 
     Intermediate files are stored in `files/`, and are useful for exploring and debugging.
 
-2. **Print the book at lulu.com:** At http://lulu.com, go through the 
-flow for printing a 6"x9" paperback. Upload the story `mm.pdf` and 
-use the cover-art designer to upload the front, back, and spine 
+3. **Print the book at lulu.com:** At http://lulu.com, go through the
+flow for printing a 6"x9" paperback. Upload the story `mm.pdf` and
+use the cover-art designer to upload the front, back, and spine
 cover art provided in `cover-art/`. The book costs less than $10 to print!
 
 ## How it works
