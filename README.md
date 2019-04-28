@@ -1,19 +1,19 @@
 # Print "The Metropolitan Man" fanfic as a hard-copy book.
 
-This repo offers code to download and typeset _The Metropolitan Man_, 
+This repo offers code to download and typeset _The Metropolitan Man_,
 the rationalist Superman fanfic by [Alexander Wales](https://alexanderwales.com/).
 
-Armed with the PDF `mm.pdf` and the cover art in `cover-art/`, 
-you can print your own hard-copy of _The Metropolitan Man_ 
-at online book-printing sites like http://www.lulu.com. 
+Armed with the PDF `mm.pdf` and the cover art in `cover-art/`,
+you can print your own hard-copy of _The Metropolitan Man_
+at online book-printing sites like http://www.lulu.com.
 
 ![](/images/mm.jpg)
 
-_The Metropolitan Man_ was originally hosted 
+_The Metropolitan Man_ was originally hosted
 [here](http://www.fanfiction.net/s/10360716/1/The-Metropolitan-Man) on fanfiction.net.
 
-The cover art comes from Mike Schwörer's GitHub repo 
-[Metropolitan-Man-Lyx](https://github.com/Mikescher/Metropolitan-Man-Lyx), 
+The cover art comes from Mike Schwörer's GitHub repo
+[Metropolitan-Man-Lyx](https://github.com/Mikescher/Metropolitan-Man-Lyx),
 and was originally created by [Justin Maller](http://justinmaller.com/wallpaper/356/).
 
 
@@ -21,8 +21,8 @@ and was originally created by [Justin Maller](http://justinmaller.com/wallpaper/
 
 1. **Install dependencies:** `pip install -r requirements.txt`
 
-2. **Build the PDF:** Run the shell script `build.sh` at the terminal 
-to download _The Metropolitan Man_ from fanfiction.net and 
+2. **Build the PDF:** Run the shell script `build.sh` at the terminal
+to download _The Metropolitan Man_ from fanfiction.net and
 typeset it into a PDF named `mm.pdf`:
 
         $ ./build.sh
@@ -38,9 +38,9 @@ cover art provided in `cover-art/`. The book costs less than $10 to print!
 
 ## How it works
 
-1. The shell script `build.sh` uses `curl` to download each chapter of _The Metropolitan Man_ from fanfiction.net, saving the raw HTML to `i_a_orig.html`, where chapter `i` ranges from 1 to 13. 
+1. The shell script `build.sh` uses `curl` to download each chapter of _The Metropolitan Man_ from fanfiction.net, saving the raw HTML to `i_a_orig.html`, where chapter `i` ranges from 1 to 13.
 
-2. The python script `prune_html.py` uses the excellent `BeautifulSoup` package to parse each chapter's HTML, selecting only the chapter name and the specific `<div>` that contains the actual story. It adds the chapter name as an `<h1>` tag inside the story's `<div>` because `h1` tags will be converted to Chapters in the HTML-to-Tex conversion. The resulting HTML is saved in `i_b_pruned.html`. 
+2. The python script `prune_html.py` uses the excellent `BeautifulSoup` package to parse each chapter's HTML, selecting only the chapter name and the specific `<div>` that contains the actual story. It adds the chapter name as an `<h1>` tag inside the story's `<div>` because `h1` tags will be converted to Chapters in the HTML-to-Tex conversion. The resulting HTML is saved in `i_b_pruned.html`.
 
     _Minor note:_ this file is a single long line. I would've preferred to use `BeautifulSoup`'s `prettify()` method to make it easier to read, but this has the unfortunate effect that `<em>` tags appear on their own line, which causes an extra space to be incorrectly inserted in certain cases. For example, `prettify()` converts the following HTML
 
@@ -71,7 +71,7 @@ cover art provided in `cover-art/`. The book costs less than $10 to print!
 
 4. The excellent document-conversion tool `pandoc` converts the HTML to Tex. We use the option `--top-level-division=chapter` to convert `h1` tags to Tex chapters, and the option `--smart` to convert double quotes `"` to Tex's left- and right-sided double quotes \`\` and `''`. The resulting Tex code is written to `i_d_pandoc1.tex`. Note that this is not a "standalone" Tex file because it does not begin with `\documentclass{}` or have any other preamble that Tex requires. This is added next.
 
-    _Minor note:_ We then run pandoc again, to fix an issue where it doesn't detect smart quotes when `<em>` tags appear inside the quoted string. 
+    _Minor note:_ We then run pandoc again, to fix an issue where it doesn't detect smart quotes when `<em>` tags appear inside the quoted string.
 
 5. The `cat` utility concatenates these chapters together, prepending a tex file `header.tex` at the beginning and appending `footer.tex` to the end. The file `header.tex` contains the Tex preamble that sets the font size, table of contents, copyright, image attributions, and other front-matter. This final tex file is written to `mm.tex`.
 
@@ -90,8 +90,8 @@ To see if you have all the correct programs installed to run `build.sh`, run thi
             <p>Start.</p>
             <p>\"I read <em>The Daily Planet</em> today,\" (Smart quotes ok?) </p>
             <p>See pages 10-20 (uses en-dash?)</p>
-            <p>this-or-that (uses hyphens?)</p> 
-            <p>I stole a piece of PU-356 from the lab. (uses hyphen?)</p>    
+            <p>this-or-that (uses hyphens?)</p>
+            <p>I stole a piece of PU-356 from the lab. (uses hyphen?)</p>
             <p>\"But I never thought -\" (uses em-dash?)</p>
             <p><em>\"Don't touch anyth- \"</em> (uses em-dash within emph tags?)</p>
             <p>He'd left the naiveté behind him. (correctly interprets unicode accented e?)</p>
