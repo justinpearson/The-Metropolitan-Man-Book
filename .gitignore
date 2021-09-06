@@ -4,3 +4,6 @@ mm.out
 mm.toc
 
 .DS_Store
+.doit.db
+__pycache__
+
