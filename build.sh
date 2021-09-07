@@ -183,22 +183,23 @@ function fix_tex_final_one_off_problems() {
 
 function chapter() {
     local i=$1
-    local f="files/${i}_a_orig.html"
+    local ii=`printf '%02d' $i` # zero-pad
+    local f="files/${ii}_a_orig.html"
     get "$i" "$f"                                                       \
     | python3 prune_html.py                                             \
-    | tee "files/${i}_b_pruned.html"                                    \
+    | tee "files/${ii}_b_pruned.html"                                   \
     | fix_html_typos                                                    \
     | fix_html_hyphens                                                  \
     | fix_html_slashes                                                  \
     | fix_html_ellipses                                                 \
-    | tee "files/${i}_c_fix.html"                                       \
+    | tee "files/${ii}_c_fix.html"                                      \
     | pandoc -f html  -t latex --top-level-division=chapter --smart     \
-    | tee "files/${i}_d_pandoc1.tex"                                    \
+    | tee "files/${ii}_d_pandoc1.tex"                                   \
     | pandoc -f latex -t latex --top-level-division=chapter --smart     \
     | fix_tex_smartquotes                                               \
     | fix_tex_newlines                                                  \
     | fix_tex_final_one_off_problems                                    \
-    > "files/${i}_e_good.tex"
+    > "files/${ii}_e_good.tex"
 }
 
 echo "Starting to download The Metropolitan Man from fanfiction.net..."
