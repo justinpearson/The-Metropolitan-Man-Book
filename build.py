@@ -141,6 +141,7 @@ def fix_html(html, saveas):
             , [ 'December 19th, 1934</p>'  , 'December 19th, 1934:</p>'   ]
             , [ 'as he stood..'            , 'as he stood.'               ]
             , [ 'Genesis 18:23 '           , 'Genesis 18:23, '            ]
+            , [ 'a hundreds of millions'   , 'hundreds of millions'       ]
         ]:
             s = s.replace(old, new)
         return s
