@@ -22,9 +22,6 @@
 #         --top-level-division: converts <h1> HTML tags
 #         to \chapter latex commands.
 #         --smart: use smart-quotes ``like this.''
-#         Also, re-pandoc it to get smart-quotes everywhere,
-#         fixing a parsing bug where <em> tags in quotes cause
-#         pandoc to not smart-quote the quotes.
 #
 # Run it by typing "./build.sh" at your terminal (no quotes).
 #
@@ -42,7 +39,7 @@ function  remove_some_intermediate_files() {
     # Also deletes annoying intermediate tex files aux, log, etc.
 
     local s="$1"
-    rm -f mm.{aux,log,out,toc}
+    rm -f mm.aux mm.log mm.out mm.toc  # ugh, don't bother wtih wildcards mm.{aux,log,out,toc} with zsh, it's weird: https://unix.stackexchange.com/questions/298548/matching-files-using-curly-brace-expansion-in-zsh#298625
     pushd files
         rm -f `ls | egrep "\d+_[${s}]_.*\.(html|tex)"`
     popd
@@ -193,9 +190,8 @@ function chapter() {
     | fix_html_slashes                                                  \
     | fix_html_ellipses                                                 \
     | tee "files/${ii}_c_fix.html"                                      \
-    | pandoc -f html  -t latex --top-level-division=chapter --smart     \
+    | pandoc -f html+smart  -t latex+smart --top-level-division=chapter \
     | tee "files/${ii}_d_pandoc1.tex"                                   \
-    | pandoc -f latex -t latex --top-level-division=chapter --smart     \
     | fix_tex_smartquotes                                               \
     | fix_tex_newlines                                                  \
     | fix_tex_final_one_off_problems                                    \
