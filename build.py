@@ -27,6 +27,12 @@ def funcs_for_chapter(i):
            , lambda x: html_to_tex( x, saveas=f'files/{i:02}_d_pandoc1.tex' )
            , lambda x: fix_tex(     x, saveas=f'files/{i:02}_e_good.tex' )
            ]
-texs = [ reduce( lambda x,f: f(x), funcs_for_chapter(i), url_for_chapter(i, cached=True) ) for i in range(1,14) ]
+texs = [
+        reduce( lambda x,f: f(x)
+              , funcs_for_chapter(i)
+              , url_for_chapter(i, cached=True)
+              )
+        for i in range(1,14)
+        ]
 make_final_tex( texs, saveas='mm.tex')
 tex_to_pdf('mm.tex', saveas='mm.pdf')
