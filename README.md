@@ -246,11 +246,11 @@ The following command will search for these troublesome spots in the final tex f
 
 ## Troubleshooting
 
-To see if you have all the correct programs installed to run `build.sh`,
+To see if you have all the correct programs installed to run `build.py` (except for the `selenium` library),
 run this command. The resulting PDF `tmp.pdf` illustrates the various
 typesetting pitfalls with hyphenation and smart-quotes. (I.e., if you
 leave out the `sed` commands, the hyphenation won't look right, and if
-you leave out the second `pandoc` run, the quote marks won't look right.)
+you leave out the `+smart` in the `pandoc` command, the quote marks won't look right.)
 
     echo "
         <html>
