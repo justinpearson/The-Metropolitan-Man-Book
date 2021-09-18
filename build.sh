@@ -21,7 +21,7 @@
 # pandoc: convert from html to tex.
 #         --top-level-division: converts <h1> HTML tags
 #         to \chapter latex commands.
-#         --smart: use smart-quotes ``like this.''
+#         -f html+smart -t latex+smart: use smart-quotes ``like this.''
 #
 # Run it by typing "./build.sh" at your terminal (no quotes).
 #
@@ -94,7 +94,8 @@ function fix_html_typos() {
         -e "s/as a mathematician\"/as a mathematician.\"/g"             \
         -e "s|December 19th, 1934</p>|December 19th, 1934:</p>|g"       \
         -e "s/as he stood\.\./as he stood./g"                           \
-        -e "s/Genesis 18:23 /Genesis 18:23, /g"
+        -e "s/Genesis 18:23 /Genesis 18:23, /g"                         \
+        -e "s/a hundreds of millions/hundreds of millions/g"
 }
 
 function fix_html_hyphens() {

@@ -3,7 +3,8 @@
 # build.sh
 
 # This bash script downloads The Metropolitan Man from fanfiction.net
-# and typesets it to PDF. Run it by typing "./build.sh" at your terminal.
+# and typesets it to PDF.
+#
 # It uses these programs:
 # 
 # curl: download the raw HTML from fanfiction.net.
@@ -11,10 +12,7 @@
 # pandoc: convert from html to tex. 
 #         --top-level-division: converts <h1> HTML tags 
 #         to \chapter latex commands. 
-#         --smart: use smart-quotes ``like this.''
-#         Also, re-pandoc it to get smart-quotes everywhere,
-#         fixing a parsing bug where <em> tags in quotes cause 
-#         pandoc to not smart-quote the quotes.
+#         -f html+smart -t latex+smart: use smart-quotes ``like this.''
 # pdflatex: convert the .tex file to a PDF using the TeX document-
 #           typesetting program created by Donald Knuth.
 #           You have to run it twice: once to gather page information
@@ -26,8 +24,7 @@ function chapter() {
     curl --silent \
       "https://www.fanfiction.net/s/10360716/${i}/The-Metropolitan-Man" \
     | python3 prune_html.py                                             \
-    | pandoc -f html  -t latex --top-level-division=chapter --smart     \
-    | pandoc -f latex -t latex --top-level-division=chapter --smart     
+    | pandoc -f html+smart  -t latex+smart --top-level-division=chapter
 }
 
 echo "Starting to download The Metropolitan Man from fanfiction.net..."
