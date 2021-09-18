@@ -195,7 +195,7 @@ function chapter() {
     | fix_html_ellipses                                                 \
     | tee "files/${ii}_c_fix.html"                                      \
     | pandoc -f html+smart  -t latex+smart --top-level-division=chapter \
-    | tee "files/${ii}_d_pandoc1.tex"                                   \
+    | tee "files/${ii}_d_pandoc.tex"                                    \
     | fix_tex_smartquotes                                               \
     | fix_tex_newlines                                                  \
     | fix_tex_final_one_off_problems                                    \

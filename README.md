@@ -61,13 +61,13 @@ The final task uses [`pdflatex`](http://tug.org/mactex/) to build the final PDF 
 
         $ doit list
 
-        1_download         Download chapters 1 thru 13, creating 1_a_orig.html, ...
-        2_prune_html       Discard non-story HTML from 1_a_orig.html, creating 1_b_pruned.html
-        3_fix_html         Fix HTML formatting issues in 1_b_pruned.html, creating 1_c_fix.html
-        4_html_to_tex      Use pandoc to convert HTML to TEX, creating 1_d_pandoc1.tex
-        5_fix_tex          Fix TEX formatting issues in 1_d_pandoc1.tex, creating 1_e_good.tex
-        6_make_final_tex   Combine all *_e_good.tex files into final TEX file, mm.tex
-        7_tex_to_pdf       Pdflatex to create final PDF.
+        a_download         Download chapters 1 thru 13, creating *_a_orig.html
+        b_prune_html       Discard non-story HTML: *_a_orig.html -> *_b_pruned.html
+        c_fix_html         Fix HTML formatting issues: *_b_pruned.html -> *_c_fix.html
+        d_html_to_tex      Use pandoc to convert HTML to TeX: *_c_fix.html -> *_d_pandoc.tex
+        e_fix_tex          Fix TEX formatting issues: *_d_pandoc.tex -> *_e_good.tex
+        f_make_final_tex   Combine TeX files: *_e_good.tex -> mm.tex
+        g_tex_to_pdf       Create final PDF: mm.tex -> mm.pdf
 
     These tasks download _The Metropolitan Man_ from fanfiction.net and typeset it into a PDF named `mm.pdf`.
     Next, run the `doit` build system at the terminal, which executes the tasks:
@@ -151,11 +151,11 @@ the author used only hyphens (dashes), rather than en-dashes and em-dashes
 We use the option `--top-level-division=chapter` to convert `h1` tags to TeX chapters,
 and the extensions `html+smart` and `latex+smart` to convert double quotes `"` to TeX's left- and right-sided
 double quotes \`\` and `''`. The resulting TeX code is written
-to `i_d_pandoc1.tex`. Note that this is not a "standalone" TeX file
+to `i_d_pandoc.tex`. Note that this is not a "standalone" TeX file
 because it does not begin with `\documentclass{}` or have any other
 preamble that TeX requires. This is added next.
 
-5. We concatenate these chapters (`*_d_pandoc1.tex`) together, prepending a tex
+5. We concatenate these chapters (`*_d_pandoc.tex`) together, prepending a tex
 file `header.tex` at the beginning and appending `footer.tex` to the end.
 The file `header.tex` contains the TeX preamble that sets the font size,
 table of contents, copyright, image attributions, and other front-matter.

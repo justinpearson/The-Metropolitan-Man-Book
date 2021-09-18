@@ -188,7 +188,7 @@ def fix_html(html, saveas=None):
 
 def html_to_tex(html, saveas=None):
     '''
-    Step D: Use pandoc to convert HTML 1_c_fix.html to TEX 1_d_pandoc1.tex.
+    Step D: Use pandoc to convert HTML 1_c_fix.html to TEX 1_d_pandoc.tex.
 
     pandoc notes:
 
@@ -303,7 +303,7 @@ def fix_tex(tex, saveas=None):
 
 def make_final_tex(texs, saveas):
     '''
-    Given a list of strings, each one representing a tex-formatted chapter of
+    Step F: Given a list of strings, each one representing a tex-formatted chapter of
     the story, concatenate them along with header.tex and footer.tex,
     saving it into the file specified.
     '''
@@ -334,7 +334,7 @@ def make_final_tex(texs, saveas):
 
 def tex_to_pdf(tex_file, saveas):
     '''
-    Given a complete tex file, use pdflatex to convert it into the final PDF, saving the PDF under the given name.
+    Step G: Given a complete tex file, use pdflatex to convert it into the final PDF, saving the PDF under the given name.
 
     Note: Would've liked to be consistent with the other functions and 
     have this function take a string, and I can't figure out how to make pdflatex run from stdin

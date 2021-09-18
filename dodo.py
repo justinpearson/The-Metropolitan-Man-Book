@@ -37,8 +37,8 @@ from lib import url_for_chapter, download, prune_html, fix_html, html_to_tex, fi
 
 CHAPTER_NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
-def task_1_download():
-    'Download chapters 1 thru 13, creating 1_a_orig.html, ...'
+def task_a_download():
+    'Download chapters 1 thru 13, creating *_a_orig.html'
 
     for i in CHAPTER_NUMS:
         fn = f'files/{i:02}_a_orig.html'
@@ -50,8 +50,8 @@ def task_1_download():
               # 'uptodate': [run_once]
         }
 
-def task_2_prune_html():
-    'Discard non-story HTML from 1_a_orig.html, creating 1_b_pruned.html'
+def task_b_prune_html():
+    'Discard non-story HTML: *_a_orig.html -> *_b_pruned.html'
 
     for i in CHAPTER_NUMS:
         fin = f'files/{i:02}_a_orig.html'
@@ -64,8 +64,8 @@ def task_2_prune_html():
             'clean': True
         }
 
-def task_3_fix_html():
-    'Fix HTML formatting issues in 1_b_pruned.html, creating 1_c_fix.html'
+def task_c_fix_html():
+    'Fix HTML formatting issues: *_b_pruned.html -> *_c_fix.html'
     for i in CHAPTER_NUMS:
         fin = f'files/{i:02}_b_pruned.html'
         fout = f'files/{i:02}_c_fix.html'
@@ -78,12 +78,12 @@ def task_3_fix_html():
         }
 
 
-def task_4_html_to_tex():
-    'Use pandoc to convert HTML to TEX, creating 1_d_pandoc1.tex'
+def task_d_html_to_tex():
+    'Use pandoc to convert HTML to TeX: *_c_fix.html -> *_d_pandoc.tex'
 
     for i in CHAPTER_NUMS:
         fin = f'files/{i:02}_c_fix.html'
-        fout = f'files/{i:02}_d_pandoc1.tex'
+        fout = f'files/{i:02}_d_pandoc.tex'
         yield {
             'name': i,
             'file_dep': [fin],
@@ -92,11 +92,11 @@ def task_4_html_to_tex():
             'clean': True
         }
 
-def task_5_fix_tex():
-    'Fix TEX formatting issues in 1_d_pandoc1.tex, creating 1_e_good.tex'
+def task_e_fix_tex():
+    'Fix TEX formatting issues: *_d_pandoc.tex -> *_e_good.tex'
 
     for i in CHAPTER_NUMS:
-        fin = f'files/{i:02}_d_pandoc1.tex'
+        fin = f'files/{i:02}_d_pandoc.tex'
         fout = f'files/{i:02}_e_good.tex'
         yield {
             'name': i,
@@ -106,8 +106,8 @@ def task_5_fix_tex():
             'clean': True
         }
 
-def task_6_make_final_tex():
-    'Combine all *_e_good.tex files into final TEX file, mm.tex'
+def task_f_make_final_tex():
+    'Combine TeX files: *_e_good.tex -> mm.tex'
 
     ch_deps = [f'files/{i:02}_e_good.tex' for i in CHAPTER_NUMS]
     deps = ['header.tex'] + ch_deps + ['footer.tex']
@@ -119,8 +119,8 @@ def task_6_make_final_tex():
         'clean': True
     }
 
-def task_7_tex_to_pdf():
-    'Pdflatex to create final PDF.'
+def task_g_tex_to_pdf():
+    'Create final PDF: mm.tex -> mm.pdf'
     'Run twice to create TOC.'
 
     n = 'mm'

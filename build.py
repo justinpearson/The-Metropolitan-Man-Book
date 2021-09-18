@@ -24,7 +24,7 @@ def funcs_for_chapter(i):
     return [ lambda x: download(    x, saveas=f'files/{i:02}_a_orig.html' )
            , lambda x: prune_html(  x, saveas=f'files/{i:02}_b_pruned.html' )
            , lambda x: fix_html(    x, saveas=f'files/{i:02}_c_fix.html' )
-           , lambda x: html_to_tex( x, saveas=f'files/{i:02}_d_pandoc1.tex' )
+           , lambda x: html_to_tex( x, saveas=f'files/{i:02}_d_pandoc.tex' )
            , lambda x: fix_tex(     x, saveas=f'files/{i:02}_e_good.tex' )
            ]
 texs = [
