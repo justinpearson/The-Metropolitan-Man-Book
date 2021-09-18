@@ -1,5 +1,14 @@
 # Print "The Metropolitan Man" fanfic as a hard-copy book.
 
+- [Intro](#intro)
+- [Quick Start](#quick-start)
+- [How it works](#how-it-works)
+- [Other ways to build the PDF](#other-ways-to-build-the-pdf)
+- [Testing](#testing)
+- [Troubleshooting](#troubleshooting)
+
+## Intro
+
 This repo offers code to download and typeset _The Metropolitan Man_,
 the rationalist Superman fanfic by [Alexander Wales](https://alexanderwales.com/).
 
