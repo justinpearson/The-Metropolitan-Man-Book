@@ -133,9 +133,22 @@ def task_7_tex_to_pdf():
         'clean': True
     }
 
+# Convenience tasks for development:
+
+# def task_tmp_open_pdf():
+#     return {
+#         'file_dep': ['mm.pdf'],
+#         'actions': ['open mm.pdf']
+#     }
+
 # def task_mypy():
 #     return {
 #         'file_dep': glob('*.py'),
 #         'actions': ['mypy %(dependencies)s']
 #     }
 
+# def task_tmp_readme():
+#     return {
+#         'file_dep': ['README.md'],
+#         'actions': ['pandoc --standalone -f markdown -t html --metadata title="foo" README.md > README.html ; open README.html']
+#     }

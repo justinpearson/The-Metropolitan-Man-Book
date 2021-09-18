@@ -182,7 +182,7 @@ and print your own books!
 } to programatically drive the Firefox web browser to fanfiction.net to
 download the HTML of each of the story's 13 chapters. Originally (Apr 2019),
 I used the simpler command-line tool \texttt{curl}, but currently (Sep 2021) fanfiction.net
-has a captcha system that detects and rejects requests from non-browser web scraping tools.
+has a Cloudflare-powered captcha system that detects and rejects requests from non-browser web scraping tools.
 Surprisingly, the captcha even detects a re-used automated browser session,
 so you have to tear down and re-initialize the browser each iteration.
 
@@ -192,7 +192,7 @@ so you have to tear down and re-initialize the browser each iteration.
 to extract the text of each chapter from its scraped HTML webpage.
 We extract both the chapter title and the HTML \texttt{<div>} tag containing
 the chapter's text contents. We embed the chapter title in an \texttt{<h1>} header tag
-and prepend it to the story's \texttt{<div>}, because pandoc --- used later in the pipeline --- 
+and prepend it to the story's \texttt{<div>}, because pandoc --- used later in the pipeline ---
 converts header tags to \LaTeX\ chapters. 
 
 \item[HTML to TeX.] We use Pandoc\footnote{\tiny{\url{https://pandoc.org/}}} to convert
