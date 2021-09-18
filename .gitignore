@@ -7,3 +7,4 @@ mm.toc
 .doit.db
 __pycache__
 
+geckodriver.log

@@ -1,4 +1,4 @@
-import re, os, requests
+import re, os
 from bs4 import BeautifulSoup
 import subprocess
 from functools import reduce 
@@ -22,7 +22,7 @@ def download(url, saveas=None):
 
     Warning: since I started this project, fanfiction.net now seems to have bot-detection logic,
     so this downloading logic does not retreive the correct HTML, but rather, a captcha-type webpage.
-    To get the real HTML, I believe you'd have to tell the requests.get function to fake certain headers.
+    So we use an automated browser (Selenium Webdriver) rather than curl or the 'requests' module.
     '''
 
     def verify_html(html):
@@ -32,21 +32,22 @@ def download(url, saveas=None):
         assert html.startswith('<!DOCTYPE html><html><head>')
         assert html.endswith('</body></html>')
         assert "<div class='storytext xcontrast_txt nocopy' id='storytext'>" in html
+        return html
 
+    # Guard clause: If local file, just return it.
     if not url.startswith('http'):
-        # If url is a local file, read and return that.
         print(f'URL {url} is not HTTP; assuming it\'s a local file and returning it.')
-        html = open(url).read()
-        verify_html(html)
-    else:
-        # Else, download the remote url and return the text HTML.
-        html = requests.get(url).text
-        verify_html(html)
+        return verify_html(open(url).read())
 
-        if saveas:
-            # If you set saveas, save the text under that filename.
-            open(saveas,'w').write(html)
+    # Else, download the remote url and return the text HTML.
+    from selenium import webdriver
+    d = webdriver.Firefox()
+    d.get(url)
+    html = d.page_source
+    d.close()
 
+    verify_html(html)
+    if saveas: open(saveas,'w').write(html)
     return html
 
 def prune_html(html, saveas=None):
@@ -201,7 +202,7 @@ def html_to_tex(html, saveas=None):
     https://pandoc.org/MANUAL.html#extension-smart
     '''
 
-    p = subprocess.run(
+    p = subprocess.run( # TODO: subprocess.check_output returns stdout
             [ 'pandoc'
             , '-f', 'html+smart'
             , '-t', 'latex+smart'
@@ -354,6 +355,7 @@ def tex_to_pdf(tex_file, saveas):
             , text=True
             , check=True
         )
+
         print(f'pdflatex run #{i}:')
         print(f'returncode: "{p.returncode}"')
         print(f'stdout: "{p.stdout}"')
