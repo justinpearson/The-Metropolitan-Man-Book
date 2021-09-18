@@ -1,7 +1,9 @@
 #!/bin/bash
 #
-# build.sh
-
+# Note: As of Sep 2021, this script no longer works, because
+# fanfiction.net has implemented a captcha which rejects web-scraping
+# tools like curl.
+#
 # This bash script downloads The Metropolitan Man from fanfiction.net
 # and typesets it to PDF.
 #

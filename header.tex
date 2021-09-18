@@ -129,14 +129,11 @@ Find the original text at:                      \\
 
 I can't resist showing you how to create the PDF for \emph{The Metropolitan Man} yourself. 
 The following two pages show the code that produced this 
-PDF\footnote{ \tiny{Actually the code to produce this PDF is slightly more complicated 
+PDF\footnote{ \tiny{Actually the code that produced this PDF --- \texttt{build.py} --- is slightly more complicated
 because it fixes some minor typesetting bugs in hyphenation and quotation marks.}}. 
-By running it in your terminal, the code will
+By running it in your terminal with \texttt{python3 build.py}, the code will
 download the \emph{The Metropolitan Man} from \url{fanfiction.net} 
 and typeset it into a PDF with LaTeX (a typesetting program common in academia).
-I tried to use only common programs like \texttt{curl}, \texttt{sed}, and \texttt{python3},
-and if you're not familiar with \texttt{pandoc} (an excellent document conversion tool), 
-I hope this project will show you how easy and powerful it is.
 
 The code lives at this GitHub repository:
 
@@ -154,7 +151,7 @@ and print your own books!
 \cleartoverso
 
 
-%%%%%%%%%%%%%%%%%%%% Page 6: bash script %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% Page 6: python script %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \thispagestyle{empty}
 
 % \footnotesize
@@ -166,7 +163,7 @@ and print your own books!
 
 \tiny
 
-\verbatiminput{build-simple.sh}
+\verbatiminput{build-simple.py}
 
 \normalsize
 \clearpage
@@ -176,20 +173,42 @@ and print your own books!
 \thispagestyle{empty}
 
 \footnotesize
-\noindent The shell script on the previous page uses the following Python script 
-to parse the HTML from fanfiction.net. This script uses the BeautifulSoup package to
-select both the chapter title and the HTML \texttt{<div>} tag containing
-the story. It prepends the chapter title to the story's \texttt{<div>}
-as an \texttt{<h1>} header tag, because pandoc --- used later in the pipeline --- 
+\noindent The script has four stages:
+
+\begin{description}
+
+\item[Download.] We use the Selenium Webdriver browser automation tool\footnote{
+    \tiny{ \url{https://selenium-python.readthedocs.io/} }
+} to programatically drive the Firefox web browser to fanfiction.net to
+download the HTML of each of the story's 13 chapters. Originally (Apr 2019),
+I used the simpler command-line tool \texttt{curl}, but currently (Sep 2021) fanfiction.net
+has a captcha system that detects and rejects requests from non-browser web scraping tools.
+Surprisingly, the captcha even detects a re-used automated browser session,
+so you have to tear down and re-initialize the browser each iteration.
+
+\item[Parse HTML.] We use BeautifulSoup\footnote{
+    \tiny{ \url{https://www.crummy.com/software/BeautifulSoup/} }
+}, a Python HTML-parsing library,
+to extract the text of each chapter from its scraped HTML webpage.
+We extract both the chapter title and the HTML \texttt{<div>} tag containing
+the chapter's text contents. We embed the chapter title in an \texttt{<h1>} header tag
+and prepend it to the story's \texttt{<div>}, because pandoc --- used later in the pipeline --- 
 converts header tags to \LaTeX\ chapters. 
-The script reads from stdin and prints the pruned HTML to stdout, making this script suitable 
-for use in Unix pipelines. 
 
-\vspace{.5cm}
+\item[HTML to TeX.] We use Pandoc\footnote{\tiny{\url{https://pandoc.org/}}} to convert
+each chapter's HTML to TeX format, converting all double-quote characters to ``smart quotes''.
 
-\tiny
+\item[Assemble chapters.] We concatenate the TeX code of the 13 chapters, bookending them with a
+LaTeX preamble and a footer, saving the result as \texttt{mm.tex}. Interestingly, the header file (\texttt{header.tex})
+contains a LaTeX command to inject the source code of \texttt{build-simple.py} into the final tex file! How meta.
 
-\verbatiminput{prune_html.py}
+\item[TeX to PDF.] We use the \LaTeX\ document preparation system (installed via MacTeX\footnote{
+    \tiny{ \url{http://tug.org/mactex/} }
+}) to build the final PDF, \texttt{mm.pdf}. We run it twice, since the first run does not
+generate the table of contents.
+
+\end{description}
+
 
 \normalsize
 \cleartorecto

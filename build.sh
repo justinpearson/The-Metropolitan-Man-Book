@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Note, Sep 2021: This file got too unwieldy, so I ported it to Python: build.py
+#
 # This bash script downloads The Metropolitan Man from fanfiction.net
 # and typesets it to PDF. It uses these programs:
 #
