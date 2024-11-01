@@ -96,13 +96,16 @@ def fix_html(html, saveas=None):
 
     def fix_html_typos(s):
         for old, new in [
-              [ 'spaceship inside..'       , 'spaceship inside.'          ]
-            , [ 'I got opening portion'    , 'I got the opening portion'  ]
-            , [ 'as a mathematician"'      , 'as a mathematician."'       ]
-            , [ 'December 19th, 1934</p>'  , 'December 19th, 1934:</p>'   ]
-            , [ 'as he stood..'            , 'as he stood.'               ]
-            , [ 'Genesis 18:23 '           , 'Genesis 18:23, '            ]
-            , [ 'a hundreds of millions'   , 'hundreds of millions'       ]
+              [ 'spaceship inside..'               , 'spaceship inside.'                   ]
+            , [ 'I got opening portion'            , 'I got the opening portion'           ]
+            , [ 'as a mathematician"'              , 'as a mathematician."'                ]
+            , [ 'December 19th, 1934</p>'          , 'December 19th, 1934:</p>'            ]
+            , [ 'as he stood..'                    , 'as he stood.'                        ]
+            , [ 'Genesis 18:23 '                   , 'Genesis 18:23, '                     ]
+            , [ 'a hundreds of millions'           , 'hundreds of millions'                ]
+            , [ 'hammered down the keys to,'       , 'hammered down the keys,'             ]
+            , [ 'insane. She could decide whether' , "insane. She couldn't decide whether" ]
+            , [ 'overwhelm positive effects'       , 'overwhelm the positive effects'      ]
         ]:
             s = s.replace(old, new)
         return s
